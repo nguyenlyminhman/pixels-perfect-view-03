@@ -1,0 +1,101 @@
+:root {
+  --na-primary: #7c5cff;
+  --na-cyan: #22d3ee;
+  --na-dark-bg: #0b1020;
+  --na-dark-chrome: #11172a;
+  --na-dark-card: #161d33;
+  --na-dark-border: #232b45;
+  --na-text: #e6eaf5;
+}
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.na-gradient-text {
+  background: linear-gradient(90deg, var(--na-primary) 0%, var(--na-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.na-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Primary button: violet -> cyan gradient on hover */
+.ant-btn-primary {
+  background-image: linear-gradient(90deg, var(--na-primary) 0%, var(--na-primary) 100%);
+  transition:
+    background-image 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.ant-btn-primary:not(:disabled):hover {
+  background-image: linear-gradient(90deg, var(--na-primary) 0%, var(--na-cyan) 100%);
+  box-shadow: 0 6px 20px rgba(124, 92, 255, 0.35);
+}
+
+/* Soft glow on the active menu item */
+.ant-menu-item-selected {
+  box-shadow: inset 0 0 0 1px rgba(124, 92, 255, 0.35);
+}
+.ant-menu-dark .ant-menu-item-selected {
+  box-shadow:
+    inset 0 0 0 1px rgba(124, 92, 255, 0.45),
+    0 0 16px rgba(124, 92, 255, 0.25);
+}
+
+/* Login page animated gradient + grid backdrop */
+.na-login-bg {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: var(--na-dark-bg);
+  overflow: hidden;
+}
+.na-login-bg::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(124, 92, 255, 0.35), transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(34, 211, 238, 0.25), transparent 45%);
+  animation: na-drift 18s ease-in-out infinite alternate;
+}
+.na-login-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 92, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 92, 255, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 80%);
+}
+.na-login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--na-dark-border);
+  background: rgba(22, 29, 51, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes na-drift {
+  from {
+    transform: translate3d(-4%, -3%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 3%, 0) scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .na-login-bg::before {
+    animation: none;
+  }
+}
