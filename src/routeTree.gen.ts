@@ -10,33 +10,122 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedConfigRepositoriesRouteImport } from './routes/_authenticated/config/repositories'
+import { Route as AuthenticatedReviewsFindingsRouteImport } from './routes/_authenticated/reviews/findings'
+import { Route as AuthenticatedReviewsPullRequestsRouteImport } from './routes/_authenticated/reviews/pull-requests'
+import { Route as AuthenticatedReviewsRunsRouteImport } from './routes/_authenticated/reviews/runs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedConfigRepositoriesRoute =
+  AuthenticatedConfigRepositoriesRouteImport.update({
+    id: '/config/repositories',
+    path: '/config/repositories',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReviewsFindingsRoute =
+  AuthenticatedReviewsFindingsRouteImport.update({
+    id: '/reviews/findings',
+    path: '/reviews/findings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReviewsPullRequestsRoute =
+  AuthenticatedReviewsPullRequestsRouteImport.update({
+    id: '/reviews/pull-requests',
+    path: '/reviews/pull-requests',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReviewsRunsRoute =
+  AuthenticatedReviewsRunsRouteImport.update({
+    id: '/reviews/runs',
+    path: '/reviews/runs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
+  '/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
+  '/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
+  '/reviews/runs': typeof AuthenticatedReviewsRunsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
+  '/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
+  '/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
+  '/reviews/runs': typeof AuthenticatedReviewsRunsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
+  '/_authenticated/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
+  '/_authenticated/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
+  '/_authenticated/reviews/runs': typeof AuthenticatedReviewsRunsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/config/repositories'
+    | '/reviews/findings'
+    | '/reviews/pull-requests'
+    | '/reviews/runs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/config/repositories'
+    | '/reviews/findings'
+    | '/reviews/pull-requests'
+    | '/reviews/runs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/config/repositories'
+    | '/_authenticated/reviews/findings'
+    | '/_authenticated/reviews/pull-requests'
+    | '/_authenticated/reviews/runs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +137,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/config/repositories': {
+      id: '/_authenticated/config/repositories'
+      path: '/config/repositories'
+      fullPath: '/config/repositories'
+      preLoaderRoute: typeof AuthenticatedConfigRepositoriesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reviews/findings': {
+      id: '/_authenticated/reviews/findings'
+      path: '/reviews/findings'
+      fullPath: '/reviews/findings'
+      preLoaderRoute: typeof AuthenticatedReviewsFindingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reviews/pull-requests': {
+      id: '/_authenticated/reviews/pull-requests'
+      path: '/reviews/pull-requests'
+      fullPath: '/reviews/pull-requests'
+      preLoaderRoute: typeof AuthenticatedReviewsPullRequestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reviews/runs': {
+      id: '/_authenticated/reviews/runs'
+      path: '/reviews/runs'
+      fullPath: '/reviews/runs'
+      preLoaderRoute: typeof AuthenticatedReviewsRunsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedConfigRepositoriesRoute: typeof AuthenticatedConfigRepositoriesRoute
+  AuthenticatedReviewsFindingsRoute: typeof AuthenticatedReviewsFindingsRoute
+  AuthenticatedReviewsPullRequestsRoute: typeof AuthenticatedReviewsPullRequestsRoute
+  AuthenticatedReviewsRunsRoute: typeof AuthenticatedReviewsRunsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedConfigRepositoriesRoute: AuthenticatedConfigRepositoriesRoute,
+  AuthenticatedReviewsFindingsRoute: AuthenticatedReviewsFindingsRoute,
+  AuthenticatedReviewsPullRequestsRoute: AuthenticatedReviewsPullRequestsRoute,
+  AuthenticatedReviewsRunsRoute: AuthenticatedReviewsRunsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
