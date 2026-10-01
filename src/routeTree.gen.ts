@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedConfigPromptsRouteImport } from './routes/_authenticated/config/prompts'
 import { Route as AuthenticatedConfigRepositoriesRouteImport } from './routes/_authenticated/config/repositories'
 import { Route as AuthenticatedReviewsFindingsRouteImport } from './routes/_authenticated/reviews/findings'
 import { Route as AuthenticatedReviewsPullRequestsRouteImport } from './routes/_authenticated/reviews/pull-requests'
@@ -37,6 +39,17 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedConfigPromptsRoute =
+  AuthenticatedConfigPromptsRouteImport.update({
+    id: '/config/prompts',
+    path: '/config/prompts',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedConfigRepositoriesRoute =
   AuthenticatedConfigRepositoriesRouteImport.update({
     id: '/config/repositories',
@@ -66,6 +79,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/config/prompts': typeof AuthenticatedConfigPromptsRoute
   '/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
   '/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
   '/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
@@ -75,6 +90,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/config/prompts': typeof AuthenticatedConfigPromptsRoute
   '/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
   '/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
   '/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
@@ -86,6 +103,8 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/config/prompts': typeof AuthenticatedConfigPromptsRoute
   '/_authenticated/config/repositories': typeof AuthenticatedConfigRepositoriesRoute
   '/_authenticated/reviews/findings': typeof AuthenticatedReviewsFindingsRoute
   '/_authenticated/reviews/pull-requests': typeof AuthenticatedReviewsPullRequestsRoute
@@ -97,6 +116,8 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/admin/users'
+    | '/config/prompts'
     | '/config/repositories'
     | '/reviews/findings'
     | '/reviews/pull-requests'
@@ -106,6 +127,8 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/admin/users'
+    | '/config/prompts'
     | '/config/repositories'
     | '/reviews/findings'
     | '/reviews/pull-requests'
@@ -116,6 +139,8 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/login'
     | '/_authenticated/dashboard'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/config/prompts'
     | '/_authenticated/config/repositories'
     | '/_authenticated/reviews/findings'
     | '/_authenticated/reviews/pull-requests'
@@ -158,6 +183,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/config/prompts': {
+      id: '/_authenticated/config/prompts'
+      path: '/config/prompts'
+      fullPath: '/config/prompts'
+      preLoaderRoute: typeof AuthenticatedConfigPromptsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/config/repositories': {
       id: '/_authenticated/config/repositories'
       path: '/config/repositories'
@@ -191,6 +230,8 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedConfigPromptsRoute: typeof AuthenticatedConfigPromptsRoute
   AuthenticatedConfigRepositoriesRoute: typeof AuthenticatedConfigRepositoriesRoute
   AuthenticatedReviewsFindingsRoute: typeof AuthenticatedReviewsFindingsRoute
   AuthenticatedReviewsPullRequestsRoute: typeof AuthenticatedReviewsPullRequestsRoute
@@ -199,6 +240,8 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedConfigPromptsRoute: AuthenticatedConfigPromptsRoute,
   AuthenticatedConfigRepositoriesRoute: AuthenticatedConfigRepositoriesRoute,
   AuthenticatedReviewsFindingsRoute: AuthenticatedReviewsFindingsRoute,
   AuthenticatedReviewsPullRequestsRoute: AuthenticatedReviewsPullRequestsRoute,

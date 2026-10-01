@@ -9,8 +9,8 @@ export function PageHeader({
   extra,
 }: {
   title: string;
-  subtitle?: string;
-  extra?: ReactNode;
+  subtitle?: string | undefined;
+  extra?: ReactNode | undefined;
 }) {
   return (
     <div

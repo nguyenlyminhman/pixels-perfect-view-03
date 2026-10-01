@@ -7,7 +7,7 @@ export function PlaceholderPage({
   description,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   description: string;
 }) {
   return (
