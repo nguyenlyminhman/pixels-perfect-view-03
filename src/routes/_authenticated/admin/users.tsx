@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Card, Table, Tag } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Card, Table, Tag } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { useCallback, useEffect, useState } from "react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { RoleGuard } from "@/components/common/RoleGuard";
+import { UserFormModal } from "@/components/common/UserFormModal";
 import { userService } from "@/services/userService";
 import type { User } from "@/types";
 
@@ -34,22 +36,42 @@ const roleColor: Record<string, string> = {
 function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    let active = true;
+  const load = useCallback(() => {
+    setLoading(true);
     userService.list().then((list) => {
-      if (!active) return;
       setUsers(list);
       setLoading(false);
     });
-    return () => {
-      active = false;
-    };
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  const openCreate = () => {
+    setEditingUser(null);
+    setModalOpen(true);
+  };
+
+  const openEdit = (user: User) => {
+    setEditingUser(user);
+    setModalOpen(true);
+  };
 
   return (
     <>
-      <PageHeader title="Users & Roles" subtitle="Who has access to NosyAgentic." />
+      <PageHeader
+        title="Users & Roles"
+        subtitle="Who has access to NosyAgentic."
+        extra={
+          <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
+            Create
+          </Button>
+        }
+      />
       <Card>
         <Table<User>
           rowKey="id"
@@ -57,6 +79,10 @@ function UsersPage() {
           dataSource={users}
           pagination={false}
           scroll={{ x: 600 }}
+          onRow={(record) => ({
+            onDoubleClick: () => openEdit(record),
+            style: { cursor: "pointer" },
+          })}
           columns={[
             { title: "Full name", dataIndex: "fullName", key: "fullName" },
             {
@@ -71,7 +97,7 @@ function UsersPage() {
               dataIndex: "role",
               key: "role",
               render: (r: string) => (
-                <Tag color={roleColor[r]} style={{ textTransform: "capitalize" }}>
+                <Tag color={roleColor[r] ?? "default"} style={{ textTransform: "capitalize" }}>
                   {r}
                 </Tag>
               ),
@@ -79,6 +105,13 @@ function UsersPage() {
           ]}
         />
       </Card>
+
+      <UserFormModal
+        open={modalOpen}
+        user={editingUser}
+        onClose={() => setModalOpen(false)}
+        onSaved={load}
+      />
     </>
   );
 }
