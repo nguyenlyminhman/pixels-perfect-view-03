@@ -36,7 +36,6 @@ export function UserFormModal({
         fullName: user.fullName,
         email: user.email,
         role: user.role,
-        password: undefined,
       });
     } else {
       form.resetFields();
