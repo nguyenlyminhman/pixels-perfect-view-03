@@ -15,7 +15,8 @@
   --na-um-strong: var(--na-text);
   --na-um-muted: #8b95b3;
   --na-um-hover: rgba(255, 255, 255, 0.07);
-  --na-um-track: rgba(255, 255, 255, 0.11);
+  --na-um-track: rgba(255, 255, 255, 0.16);
+  --na-um-placeholder: #77819c;
 }
 
 [data-na-theme="light"] {
@@ -26,7 +27,8 @@
   --na-um-strong: #1a2036;
   --na-um-muted: #5a6480;
   --na-um-hover: rgba(26, 32, 54, 0.06);
-  --na-um-track: rgba(26, 32, 54, 0.12);
+  --na-um-track: rgba(26, 32, 54, 0.14);
+  --na-um-placeholder: #7b8496;
 }
 
 body {
@@ -294,6 +296,11 @@ body {
   font-size: 13px;
   color: var(--na-um-muted);
 }
+.na-user-modal .ant-input::placeholder,
+.na-user-modal .ant-select-selection-placeholder {
+  color: var(--na-um-placeholder);
+  opacity: 1;
+}
 
 /* Password strength meter */
 .na-um-strength {
@@ -325,12 +332,10 @@ body {
   font-size: 11px;
   color: var(--na-um-muted);
 }
-.na-um-strength[data-score="1"] .na-um-strength-bars i:nth-child(-n + 1),
-.na-um-strength[data-score="1"] .na-um-strength-label {
+.na-um-strength[data-score="1"] .na-um-strength-bars i:nth-child(-n + 1) {
   background: #f43f5e;
 }
 .na-um-strength[data-score="1"] .na-um-strength-label {
-  background: transparent;
   color: #f43f5e;
 }
 .na-um-strength[data-score="2"] .na-um-strength-bars i:nth-child(-n + 2) {

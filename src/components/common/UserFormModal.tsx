@@ -163,7 +163,6 @@ export function UserFormModal({
           <Form.Item
             name="username"
             label="Username"
-            extra="Used to sign in."
             rules={[{ required: true, message: "Username is required" }]}
           >
             <Input
