@@ -97,7 +97,7 @@ function UsersPage() {
               dataIndex: "role",
               key: "role",
               render: (r: string) => (
-                <Tag color={roleColor[r]} style={{ textTransform: "capitalize" }}>
+                <Tag color={roleColor[r] ?? "default"} style={{ textTransform: "capitalize" }}>
                   {r}
                 </Tag>
               ),
