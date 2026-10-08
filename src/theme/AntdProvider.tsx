@@ -9,7 +9,7 @@ export function AntdProvider({ children }: { children: ReactNode }) {
   // Mirrors the active theme onto <html> so plain-CSS surfaces (modals, login)
   // can pick light values instead of the dark defaults.
   useEffect(() => {
-    document.documentElement.dataset.naTheme = mode;
+    document.documentElement.dataset["naTheme"] = mode;
   }, [mode]);
 
   return (
