@@ -6,6 +6,31 @@
   --na-dark-card: #161d33;
   --na-dark-border: #232b45;
   --na-text: #e6eaf5;
+
+  /* Modal surfaces (dark is the default theme) */
+  --na-um-bg: var(--na-dark-card);
+  --na-um-line: var(--na-dark-border);
+  --na-um-field: #111a2e;
+  --na-um-foot: rgba(255, 255, 255, 0.025);
+  --na-um-strong: var(--na-text);
+  --na-um-muted: #8b95b3;
+  --na-um-hover: rgba(255, 255, 255, 0.07);
+  --na-um-track: rgba(255, 255, 255, 0.16);
+  --na-um-placeholder: #77819c;
+  --na-um-error: #ff7a8c;
+}
+
+[data-na-theme="light"] {
+  --na-um-bg: #ffffff;
+  --na-um-line: #e3e8f2;
+  --na-um-field: #f6f8fd;
+  --na-um-foot: #fafbfe;
+  --na-um-strong: #1a2036;
+  --na-um-muted: #5a6480;
+  --na-um-hover: rgba(26, 32, 54, 0.06);
+  --na-um-track: rgba(26, 32, 54, 0.14);
+  --na-um-placeholder: #7b8496;
+  --na-um-error: #d92b4b;
 }
 
 body {
@@ -94,8 +119,318 @@ body {
   }
 }
 
+/* ------------------------------------------------------------------
+   "Engineered technical" modal shell — used by the user form modal.
+   Split-field grid, uppercase micro-labels, inset fields, gradient
+   accent hairline and a separated footer bar.
+------------------------------------------------------------------- */
+.na-user-modal .ant-modal-content {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--na-um-line);
+  border-radius: 16px;
+  background: var(--na-um-bg);
+  box-shadow: 0 30px 80px -24px rgba(3, 6, 18, 0.8);
+  animation: na-um-rise 0.28s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.na-user-modal .ant-modal-content::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--na-primary) 35%,
+    var(--na-cyan) 68%,
+    transparent
+  );
+  opacity: 0.85;
+}
+.na-user-modal .ant-modal-header {
+  margin: 0;
+  padding: 22px 24px 16px;
+  background: transparent;
+  border-bottom: 1px solid var(--na-um-line);
+}
+.na-user-modal .ant-modal-title {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+.na-user-modal .ant-modal-body {
+  padding: 20px 24px 6px;
+}
+.na-user-modal .ant-modal-footer {
+  margin: 0;
+  padding: 14px 24px;
+  background: var(--na-um-foot);
+  border-top: 1px solid var(--na-um-line);
+}
+.na-user-modal .ant-modal-close {
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  color: var(--na-um-muted);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+.na-user-modal .ant-modal-close:hover {
+  color: var(--na-um-strong);
+  background: var(--na-um-hover);
+}
+
+/* Header: gradient accent bar + title + one-line purpose */
+.na-um-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-right: 34px;
+}
+.na-um-accent {
+  flex: none;
+  width: 3px;
+  align-self: stretch;
+  min-height: 38px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--na-primary), var(--na-cyan));
+  box-shadow: 0 0 14px rgba(124, 92, 255, 0.55);
+}
+.na-um-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--na-um-strong);
+}
+.na-um-sub {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--na-um-muted);
+}
+
+/* Fields: two-column split grid, uppercase micro-labels */
+.na-um-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 16px;
+}
+.na-um-span {
+  grid-column: 1 / -1;
+}
+.na-user-modal .ant-form-item {
+  margin-bottom: 16px;
+  animation: na-um-field 0.34s ease both;
+}
+.na-user-modal .ant-form-item:nth-child(2) {
+  animation-delay: 0.04s;
+}
+.na-user-modal .ant-form-item:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.na-user-modal .ant-form-item:nth-child(4) {
+  animation-delay: 0.12s;
+}
+.na-user-modal .ant-form-item:nth-child(5) {
+  animation-delay: 0.16s;
+}
+.na-user-modal .ant-form-item-label {
+  padding-bottom: 6px;
+}
+.na-user-modal .ant-form-item-label > label {
+  height: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--na-um-muted);
+}
+.na-user-modal .ant-form-item-extra {
+  min-height: 0;
+  padding-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--na-um-muted);
+}
+.na-user-modal .ant-form-item-explain-error {
+  font-size: 11.5px;
+  color: var(--na-um-error);
+}
+
+/* Inset fields with a violet focus glow */
+.na-user-modal .ant-input-affix-wrapper,
+.na-user-modal .ant-input,
+.na-user-modal .ant-select-selector {
+  border-color: var(--na-um-line);
+  background: var(--na-um-field);
+  border-radius: 10px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.na-user-modal .ant-input-affix-wrapper > .ant-input {
+  background: transparent;
+}
+.na-user-modal .ant-input-affix-wrapper:focus-within,
+.na-user-modal .ant-input-affix-wrapper-focused,
+.na-user-modal .ant-select-focused .ant-select-selector {
+  border-color: rgba(124, 92, 255, 0.6);
+  background: color-mix(in oklab, var(--na-um-field) 88%, var(--na-primary));
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.16);
+}
+.na-user-modal .ant-input-affix-wrapper .ant-input-password-icon {
+  color: var(--na-um-muted);
+}
+.na-user-modal .ant-input-affix-wrapper .ant-input-password-icon:hover {
+  color: var(--na-um-strong);
+}
+.na-um-prefix {
+  font-size: 13px;
+  color: var(--na-um-muted);
+}
+.na-um-at {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  color: var(--na-um-muted);
+}
+.na-user-modal .ant-input::placeholder,
+.na-user-modal .ant-select-selection-placeholder {
+  color: var(--na-um-placeholder);
+  opacity: 1;
+}
+
+/* Password strength meter */
+.na-um-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.na-um-strength-bars {
+  display: inline-flex;
+  gap: 4px;
+}
+.na-um-strength-bars i {
+  width: 26px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--na-um-track);
+  transition: background 0.25s ease;
+}
+.na-um-strength-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--na-um-muted);
+}
+.na-um-strength-rule {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--na-um-muted);
+}
+.na-um-strength[data-score="1"] .na-um-strength-bars i:nth-child(-n + 1) {
+  background: #f43f5e;
+}
+.na-um-strength[data-score="1"] .na-um-strength-label {
+  color: #f43f5e;
+}
+.na-um-strength[data-score="2"] .na-um-strength-bars i:nth-child(-n + 2) {
+  background: #fbbf24;
+}
+.na-um-strength[data-score="2"] .na-um-strength-label {
+  color: #fbbf24;
+}
+.na-um-strength[data-score="3"] .na-um-strength-bars i:nth-child(-n + 3) {
+  background: #22d3ee;
+}
+.na-um-strength[data-score="3"] .na-um-strength-label {
+  color: #22d3ee;
+}
+.na-um-strength[data-score="4"] .na-um-strength-bars i:nth-child(-n + 4) {
+  background: #34d399;
+}
+.na-um-strength[data-score="4"] .na-um-strength-label {
+  color: #34d399;
+}
+
+/* Footer bar */
+.na-um-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.na-um-foot-note {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--na-um-muted);
+}
+.na-um-foot-actions {
+  display: flex;
+  gap: 10px;
+}
+.na-um-ghost.ant-btn {
+  border-color: transparent;
+  background: transparent;
+  color: var(--na-um-muted);
+}
+.na-um-ghost.ant-btn:hover {
+  color: var(--na-um-strong);
+  border-color: transparent;
+  background: var(--na-um-hover);
+}
+.na-um-primary.ant-btn-primary {
+  border: none;
+  background-image: linear-gradient(90deg, var(--na-primary), #6d4aef);
+  box-shadow: 0 8px 22px -8px rgba(124, 92, 255, 0.85);
+}
+.na-um-primary.ant-btn-primary:not(:disabled):hover {
+  background-image: linear-gradient(90deg, var(--na-primary), var(--na-cyan));
+  box-shadow: 0 10px 26px -6px rgba(124, 92, 255, 0.95);
+}
+.na-um-primary.ant-btn-primary:active {
+  transform: translateY(1px);
+}
+
+@keyframes na-um-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes na-um-field {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .na-um-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .na-login-bg::before {
+  .na-login-bg::before,
+  .na-user-modal .ant-modal-content,
+  .na-user-modal .ant-form-item {
     animation: none;
   }
 }
