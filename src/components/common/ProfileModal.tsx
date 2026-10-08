@@ -22,7 +22,7 @@ export function ProfileModal({ open, onClose }: { open: boolean; onClose: () => 
       form.setFieldsValue({
         fullName: user.fullName,
         email: user.email,
-        avatar: user.avatar,
+        avatar: user.avatar ?? "",
       });
       setAvatar(user.avatar ?? "");
     }
